@@ -1,0 +1,176 @@
+<section class="cardDesign">
+    <mat-card class="cardProperty cardDesign">CANDIDATE DETAILS</mat-card>
+    <diV class="container-fluid">
+        <div class="row mt-5">
+            <div class="col-3">
+                <div class="example-button-container buttonView">
+                    <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
+                        <mat-icon (click)="getRegisterPage()">plus_one</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="col-4">
+                <input type="text" class="form-control searchBox" placeholder="Search" [(ngModel)]="searchValue">
+            </div>
+        </div>
+    </diV>
+    <div class="container">
+        <div class="row mt-5">
+            <mat-card *ngFor="let candidateList of getCandidateList | filter : searchValue " class="example-card"
+                data-toggle="modal" (click)="getCandidateDetails(candidateList)" data-target="#bootstrapModel">
+                <mat-card-title>
+                    <div class="row mt-2">
+                        <div class="col-2">
+                            <i class="bi bi-person-circle iconView"> </i>
+                        </div>
+                        <div class="col-6  listViewStyle">
+                            {{candidateList.name}}
+                        </div>
+                    </div>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <div class="row mt-4">
+                        <div class="col-2">
+                            <i class="bi bi-envelope-fill iconView"></i>
+                        </div>
+                        <div class="col-8">
+                            {{candidateList.emailId}}
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-2">
+                            <i class="bi bi-telephone-fill iconView"></i>
+                        </div>
+                        <div class="col-5">
+                            {{candidateList.phoneNumber}}
+                        </div>
+                    </div>
+                </mat-card-subtitle>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col ">
+                            <div class="apllicantView">
+                                {{candidateList.applicantStatus}}
+
+                            </div>
+                        </div>
+                    </div>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</section>
+<div>
+
+
+    <div class="modal" [style.display]="showModal ? 'block' : 'none'">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title text-white"> CANDIDATE DETAILS</h3>
+                    <button type="button" class="btn-close closebutton" (click)="showModal=false"></button>
+                </div>
+                <div class="modal-body" class="scrollbar" id="style-1">
+                    <div class="row mt-2">
+                        <div class="mb-3">
+                            <label class=" form-label">Name</label>
+                            <input class="form-control" disabled="disabled" [ngModel]="candidateDetails?.name">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="mb-3">
+                            <label class="form-label">Email Id</label>
+                            <input class="form-control" disabled="disabled" [ngModel]="candidateDetails?.emailId">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="mb-3">
+                            <label class="form-label">Mobile Number</label>
+                            <input class="form-control" disabled="disabled" [ngModel]="candidateDetails?.phoneNumber">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="mb-3">
+                            <label class="form-label">Education</label>
+                            <input class="form-control" disabled="disabled"
+                                [ngModel]="candidateDetails?.educationDetails">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="mb-3">
+                            <label class="form-label">Skill Sets</label>
+                            <input class="form-control" disabled="disabled" [ngModel]="candidateDetails?.skillSet">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="mb-3">
+                            <label class="form-label">Current Position</label>
+                            <input class="form-control" disabled="disabled" [ngModel]="candidateDetails?.currentRole">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="mb-3">
+                            <label class="form-label">Current Salary</label>
+                            <input class="form-control" disabled="disabled" [ngModel]="candidateDetails?.currentCtc">
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="mb-3">
+                            <label class="form-label">Country Residing</label>
+                            <input class="form-control" disabled="disabled"
+                                [ngModel]="candidateDetails?.countryResiding">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="mb-3">
+                            <label class="form-label">Citizenship</label>
+                            <input class="form-control" disabled="disabled" [ngModel]="candidateDetails?.citizenship">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="mb-3">
+                            <label class="form-label">Current City</label>
+                            <input class="form-control" disabled="disabled" [ngModel]="candidateDetails?.currentCity">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="form-label"> Expected Salary</label>
+                        <div class="col-8 mb-3">
+                            <input class="form-control" (click)="onSelect()" [ngModel]="candidateDetails?.expectedCtc">
+                        </div>
+                        <div class="col-2">
+                            <i class="bi bi-save " *ngIf="isEditTable" (click)="onEditSave()"></i>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="mb-3">
+                            <label class="mt-2 form-label">Attachments</label>
+                            <app-attachmnets [CandidateId]="attachmentDetails">
+                            </app-attachmnets>
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-2">
+                        <label class="mb-3">Apllicant Status</label>
+                        <div>
+                            <select class="form-select" (change)="onChange($event)" required>
+                                <option class="option-Form">Open this select menu</option>
+                                <option value="Selected">Selected</option>
+                                <option value="Non-selected">Non Selected</option>
+                                <option value="Waiting">Waiting List</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary buttonClose"
+                        (click)="showModal= false">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
